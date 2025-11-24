@@ -9,7 +9,7 @@ html, body, #root { height: 100%; }
 */
 
 :root {
-  /* Ocean Professional tokens */
+  /* Ocean Professional tokens — design-tokens root */
   --color-primary: #2563EB;
   --color-secondary: #F59E0B;
   --color-success: #F59E0B;
@@ -237,7 +237,7 @@ button, input, textarea { font: inherit; color: inherit; }
   color: var(--muted);
 }
 .status { display: flex; align-items: center; gap: 8px; }
-.status-text { font-size: var(--font-size-xs); }
+.status-text { font-size: var(--font-size-xs); letter-spacing: 0.2px; }
 .status-error { color: var(--color-error); font-size: var(--font-size-xs); }
 
 .dot { width: 8px; height: 8px; border-radius: 999px; display: inline-block; border: 1px solid var(--border); }

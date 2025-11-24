@@ -18,7 +18,7 @@ export default function Header({ theme, onToggleTheme }) {
         </div>
         <div className="titles">
           <h1 className="app-title" style={{ marginBottom: 0 }}>ChatGPT Web</h1>
-          <p className="app-subtitle">Ocean Professional</p>
+          <p className="app-subtitle">Ocean Professional · v0.1.1</p>
         </div>
       </div>
       <button
