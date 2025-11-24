@@ -1,6 +1,6 @@
 import React from 'react';
-import './index.css'; // global styles (must load first)
-import './App.css';   // app-scoped styles and minimal hot-reload marker
+import './index.css'; // global styles (must load first, sets variables and resets)
+import './App.css';   // app-scoped styles and visible hot-reload marker
 import Header from './components/Header';
 import ChatWindow from './components/ChatWindow';
 import MessageInput from './components/MessageInput';
@@ -18,7 +18,7 @@ function App() {
 
   // no-op variable to ensure rebuilds detect file change during hot reload
   // bump this to force preview refresh validation
-  const __previewHeartbeat = 'v7';
+  const __previewHeartbeat = 'v8';
 
   return (
     <div

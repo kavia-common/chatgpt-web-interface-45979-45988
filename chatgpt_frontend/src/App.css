@@ -6,6 +6,6 @@
   background: var(--bg);
   color: var(--text);
   letter-spacing: var(--letter-tight);
-  /* Minimal visible change marker: subtle left border accent to verify hot reload (bumped v2) */
-  border-left: 3px solid rgba(37,99,235,0.25);
+  /* Visible hot-reload marker: left border accent (v3) */
+  border-left: 4px solid rgba(37,99,235,0.35);
 }

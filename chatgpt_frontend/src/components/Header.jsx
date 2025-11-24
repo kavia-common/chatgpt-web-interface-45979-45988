@@ -17,7 +17,7 @@ export default function Header() {
           </svg>
         </div>
         <div className="titles">
-          <h1 className="app-title" style={{ margin: 0 }}>ChatGPT Web</h1>
+          <h1 className="app-title" style={{ margin: 0 }}>ChatGPT</h1>
         </div>
       </div>
     </header>

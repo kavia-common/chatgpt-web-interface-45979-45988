@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css'; // Ensure global CSS is always loaded at the entrypoint
+import './index.css'; // Global styles: variables, resets, tokens (must load before App)
 import App from './App';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
