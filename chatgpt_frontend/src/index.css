@@ -3,7 +3,6 @@
 
 html, body, #root { height: 100%; }
 
-/* Attachment reference (design screenshot): keep for QA */
 :root {
   /* Ocean Professional tokens — design-tokens root */
   --color-primary: #2563EB;
@@ -93,8 +92,8 @@ button, input, textarea { font: inherit; color: inherit; }
   display: grid;
   grid-template-columns: 1fr;
   align-items: center;
-  height: 56px;               /* closer to screenshot */
-  padding: 10px 16px;         /* tighter */
+  height: 56px;
+  padding: 10px 16px;
   background: var(--header-glass);
   border-bottom: 1px solid var(--border);
   backdrop-filter: blur(12px);
@@ -115,7 +114,7 @@ button, input, textarea { font: inherit; color: inherit; }
 .chat-window {
   flex: 1;
   overflow-y: auto;
-  padding: 20px 16px 8px;     /* +1px tweak for hot-reload */
+  padding: 21px 16px 8px;     /* +1px tweak to force visible rebuild */
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -303,5 +302,5 @@ button, input, textarea { font: inherit; color: inherit; }
 .dot-idle { background: #64748b; }
 
 @media (min-width: 768px) {
-  .chat-window { padding: 22px 22px 12px; } /* adjust top by -2px for larger screens */
+  .chat-window { padding: 23px 22px 12px; } /* +1px to top padding for visible change */
 }

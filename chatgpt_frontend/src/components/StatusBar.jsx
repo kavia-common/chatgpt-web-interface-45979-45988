@@ -24,9 +24,7 @@ export default function StatusBar({ pending, error, onStop, onClear }) {
             Stop
           </button>
         </div>
-      ) : (
-        <div style={{ width: 1, height: 1, overflow: 'hidden' }} aria-hidden="true" />
-      )}
+      ) : null}
     </div>
   );
 }

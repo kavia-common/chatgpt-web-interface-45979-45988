@@ -13,7 +13,6 @@ export default function MessageBubble({ role, content }) {
         className={`bubble ${isUser ? 'user' : 'assistant'}`}
         role="group"
         aria-label={`${isUser ? 'User' : 'Assistant'} message`}
-        style={{ maxWidth: 'min(740px, 92%)' }}
       >
         <div className="bubble-text">{content}</div>
       </div>

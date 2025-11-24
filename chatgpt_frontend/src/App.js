@@ -17,20 +17,13 @@ function App() {
   const { theme, setTheme } = useTheme('dark'); // default to dark to match screenshot
   const { state, sendMessage, stop, clear } = useChat();
 
-  // change preview heartbeat for visible hot-reload without UI markers
-  const __previewHeartbeat = 'v11';
-
   // enforce dark theme initially once
   if (theme !== 'dark') {
     setTimeout(() => setTheme('dark'), 0);
   }
 
   return (
-    <div
-      className="container app"
-      data-preview={__previewHeartbeat}
-      data-theme-active={theme}
-    >
+    <div className="container app" data-theme-active={theme}>
       <Header />
       <ChatWindow messages={state.messages} />
       <MessageInput onSend={sendMessage} disabled={state.pending} onClear={clear} />

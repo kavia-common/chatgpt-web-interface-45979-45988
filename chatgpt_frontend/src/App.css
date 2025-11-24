@@ -6,5 +6,4 @@
   background: var(--bg);
   color: var(--text);
   letter-spacing: var(--letter-tight);
-  /* ensure no extraneous borders or markers */
 }

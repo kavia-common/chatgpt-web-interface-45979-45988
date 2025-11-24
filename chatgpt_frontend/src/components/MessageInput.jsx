@@ -40,7 +40,7 @@ export default function MessageInput({ onSend, disabled, onClear }) {
       <textarea
         ref={ref}
         className="input"
-        placeholder="Type your message…  Press Enter to send · Shift+Enter to add a new line"
+        placeholder="Type your message…  Enter to send · Shift+Enter for newline"
         aria-label="Message input"
         value={value}
         disabled={disabled}
@@ -56,6 +56,7 @@ export default function MessageInput({ onSend, disabled, onClear }) {
           disabled={disabled || !value.trim()}
           aria-label="Send message"
           title="Send"
+          style={{ minWidth: 92, height: 'var(--btn-height)' }}
         >
           Send
         </button>
