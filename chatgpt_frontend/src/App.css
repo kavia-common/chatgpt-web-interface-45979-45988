@@ -5,4 +5,5 @@
   flex-direction: column;
   background: var(--bg);
   color: var(--text);
+  letter-spacing: var(--letter-tight);
 }
