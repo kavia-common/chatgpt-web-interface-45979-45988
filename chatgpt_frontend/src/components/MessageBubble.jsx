@@ -3,14 +3,16 @@ import useSpeech from '../hooks/useSpeech';
 import { getFeatureFlags } from '../utils/env';
 
 // PUBLIC_INTERFACE
-export default function MessageBubble({ role, content, attachments = [] }) {
+export default function MessageBubble({ id, role, content, attachments = [], reactions, onToggleReaction }) {
   /**
    * Render a chat message bubble for user or assistant with optional TTS play.
    * Renders image attachments as thumbnails below the text.
+   * Also renders an inline reaction bar with accessible buttons.
    */
   const isUser = role === 'user';
   const flags = getFeatureFlags();
   const voiceOutputEnabled = !!flags.voice_output;
+  const reactionsEnabled = flags.reactions_enabled !== false; // default true
 
   const { canSpeak, speak, speaking, cancelSpeak } = useSpeech();
 
@@ -35,6 +37,37 @@ export default function MessageBubble({ role, content, attachments = [] }) {
     ? attachments.filter((a) => a && typeof a === 'object' && (a.type?.startsWith('image/') || /\.(png|jpe?g|gif|webp|bmp|svg)$/i.test(a.name || '')))
     : [];
 
+  // reaction helpers
+  const counts = reactions?.counts || {};
+  const userReacted = reactions?.userReacted || {};
+  const likeCount = counts.like || 0;
+  const dislikeCount = counts.dislike || 0;
+  const likeActive = !!userReacted.like;
+  const dislikeActive = !!userReacted.dislike;
+
+  const handleReaction = (name) => {
+    if (!reactionsEnabled) return;
+    if (typeof onToggleReaction === 'function') {
+      onToggleReaction(id, name);
+    }
+  };
+
+  const btnStyle = {
+    height: 28,
+    minWidth: 34,
+    padding: '0 8px',
+    borderRadius: 10,
+    border: '1px solid var(--border)',
+    background: 'transparent',
+    color: 'var(--muted)',
+  };
+  const btnActiveStyle = {
+    ...btnStyle,
+    background: 'color-mix(in srgb, var(--surface) 85%, var(--color-primary) 15%)',
+    color: 'var(--text)',
+    borderColor: 'color-mix(in srgb, var(--border), var(--color-primary) 25%)'
+  };
+
   return (
     <div className={`bubble-row ${isUser ? 'right' : 'left'}`}>
       <div
@@ -56,7 +89,9 @@ export default function MessageBubble({ role, content, attachments = [] }) {
             </button>
           </div>
         ) : null}
+
         <div className="bubble-text">{content}</div>
+
         {imgs.length > 0 ? (
           <div
             className="attachments"
@@ -90,6 +125,46 @@ export default function MessageBubble({ role, content, attachments = [] }) {
                 </a>
               );
             })}
+          </div>
+        ) : null}
+
+        {reactionsEnabled ? (
+          <div
+            className="reaction-bar"
+            role="toolbar"
+            aria-label="Message reactions"
+            style={{
+              display: 'inline-flex',
+              gap: 6,
+              alignItems: 'center',
+              marginTop: 8,
+              opacity: 0.95
+            }}
+          >
+            <button
+              type="button"
+              className="reaction-btn"
+              onClick={() => handleReaction('like')}
+              aria-pressed={likeActive}
+              aria-label={likeActive ? 'Remove thumbs up' : 'Thumbs up'}
+              title={likeActive ? 'Remove thumbs up' : 'Thumbs up'}
+              style={likeActive ? btnActiveStyle : btnStyle}
+            >
+              <span aria-hidden="true">👍</span>
+              <span style={{ marginLeft: 6, fontSize: '12px', opacity: 0.9 }}>{likeCount}</span>
+            </button>
+            <button
+              type="button"
+              className="reaction-btn"
+              onClick={() => handleReaction('dislike')}
+              aria-pressed={dislikeActive}
+              aria-label={dislikeActive ? 'Remove thumbs down' : 'Thumbs down'}
+              title={dislikeActive ? 'Remove thumbs down' : 'Thumbs down'}
+              style={dislikeActive ? btnActiveStyle : btnStyle}
+            >
+              <span aria-hidden="true">👎</span>
+              <span style={{ marginLeft: 6, fontSize: '12px', opacity: 0.9 }}>{dislikeCount}</span>
+            </button>
           </div>
         ) : null}
       </div>

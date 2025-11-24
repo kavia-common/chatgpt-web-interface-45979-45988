@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import MessageBubble from './MessageBubble';
 
 // PUBLIC_INTERFACE
-export default function ChatWindow({ messages }) {
+export default function ChatWindow({ messages, onToggleReaction }) {
   /** Scrollable message area that autoscrolls to bottom on updates */
   const endRef = useRef(null);
 
@@ -25,7 +25,15 @@ export default function ChatWindow({ messages }) {
         </div>
       ) : (
         messages.map((m) => (
-          <MessageBubble key={m.id} role={m.role} content={m.content} attachments={m.attachments} />
+          <MessageBubble
+            key={m.id}
+            id={m.id}
+            role={m.role}
+            content={m.content}
+            attachments={m.attachments}
+            reactions={m.reactions}
+            onToggleReaction={onToggleReaction}
+          />
         ))
       )}
       <div ref={endRef} aria-hidden="true" />

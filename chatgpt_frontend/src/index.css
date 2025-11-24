@@ -295,6 +295,21 @@ button, input, textarea { font: inherit; color: inherit; }
   color: var(--text);
 }
 
+/* Reaction buttons — compact and subtle */
+.reaction-bar .reaction-btn {
+  transition: background 120ms ease, color 120ms ease, border-color 120ms ease, transform 120ms ease;
+}
+.reaction-bar .reaction-btn:hover {
+  background: color-mix(in srgb, var(--surface) 90%, var(--color-primary) 10%);
+  border-color: color-mix(in srgb, var(--border), var(--color-primary) 15%);
+  color: var(--text);
+  transform: translateY(-0.5px);
+}
+.reaction-bar .reaction-btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(37,99,235,0.22);
+}
+
 .select {
   display: inline-flex;
   align-items: center;

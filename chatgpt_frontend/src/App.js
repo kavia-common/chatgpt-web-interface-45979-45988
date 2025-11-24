@@ -17,7 +17,7 @@ function App() {
    * Strict visual parity per provided screenshot.
    */
   const { theme, setTheme, forceLight } = useTheme('light'); // default to light
-  const { state, sendMessage, stop, clear } = useChat();
+  const { state, sendMessage, stop, clear, toggleReaction } = useChat();
   const speech = useSpeech();
   const flags = React.useMemo(() => getFeatureFlags() || {}, []);
 
@@ -57,7 +57,7 @@ function App() {
       data-hotreload-proof="v1" // temporary marker for visual verification
     >
       <Header />
-      <ChatWindow messages={state.messages} />
+      <ChatWindow messages={state.messages} onToggleReaction={toggleReaction} />
       <MessageInput onSend={sendMessage} disabled={state.pending} onClear={clear} />
       <StatusBar pending={state.pending} error={state.error} onStop={stop} onClear={clear} />
     </div>

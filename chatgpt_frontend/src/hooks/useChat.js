@@ -31,7 +31,7 @@ export function useChat() {
     async (text, attachments = []) => {
       if (!text?.trim() || state.pending) return;
       const safeAttachments = Array.isArray(attachments) ? attachments : [];
-      const userMsg = { id: uid('msg'), role: 'user', content: text.trim(), attachments: safeAttachments.length ? safeAttachments : undefined };
+      const userMsg = { id: uid('msg'), role: 'user', content: text.trim(), attachments: safeAttachments.length ? safeAttachments : undefined, reactions: { counts: {}, userReacted: {} } };
 
       dispatch({ type: ChatActions.ADD_USER_MESSAGE, payload: userMsg });
       dispatch({ type: ChatActions.SET_PENDING, payload: true });
@@ -52,7 +52,7 @@ export function useChat() {
 
         const result = await service.createCompletion({ messages });
 
-        const assistantMsg = { id: uid('msg'), role: 'assistant', content: result.content || '' };
+        const assistantMsg = { id: uid('msg'), role: 'assistant', content: result.content || '', reactions: { counts: {}, userReacted: {} } };
         dispatch({ type: ChatActions.ADD_ASSISTANT_MESSAGE, payload: assistantMsg });
         const nextState = {
           ...state,
@@ -84,7 +84,42 @@ export function useChat() {
     persist({ ...initialChatState });
   }, [persist]);
 
-  return { state, sendMessage, stop, clear };
+  /**
+   * PUBLIC_INTERFACE
+   * toggleReaction(messageId: string, reaction: string)
+   * Toggle a reaction for the current user. If the same reaction is active, remove it; if a different one is active, switch.
+   */
+  const toggleReaction = useCallback((messageId, reaction) => {
+    dispatch({ type: ChatActions.TOGGLE_REACTION, payload: { messageId, reaction } });
+    // persist with updated state approximation
+    const next = {
+      ...state,
+      messages: state.messages.map((m) => {
+        if (m.id !== messageId) return m;
+        // local approximation mirrors reducer logic (for persistence immediacy)
+        const counts = { ...(m.reactions?.counts || {}) };
+        const userReacted = { ...(m.reactions?.userReacted || {}) };
+        const prev = Object.keys(userReacted).find((k) => userReacted[k]);
+        const isSame = prev === reaction;
+        if (isSame) {
+          userReacted[reaction] = false;
+          counts[reaction] = Math.max(0, (counts[reaction] || 0) - 1);
+        } else {
+          if (prev) {
+            userReacted[prev] = false;
+            counts[prev] = Math.max(0, (counts[prev] || 0) - 1);
+          }
+          userReacted[reaction] = true;
+          counts[reaction] = (counts[reaction] || 0) + 1;
+        }
+        return { ...m, reactions: { counts, userReacted } };
+      })
+    };
+    saveState(STORAGE_KEY, next);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state]);
+
+  return { state, sendMessage, stop, clear, toggleReaction };
 }
 
 export default useChat;
