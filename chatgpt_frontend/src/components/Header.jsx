@@ -6,7 +6,7 @@ export default function Header({ theme, onToggleTheme }) {
   return (
     <header
       className="app-header"
-      aria-label="Application Header"
+      aria-label="Application header"
       role="banner"
     >
       <div className="brand">

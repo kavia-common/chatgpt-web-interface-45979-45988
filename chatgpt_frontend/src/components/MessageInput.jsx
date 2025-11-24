@@ -40,7 +40,7 @@ export default function MessageInput({ onSend, disabled, onClear }) {
       <textarea
         ref={ref}
         className="input"
-        placeholder="Type your message…  Enter to send · Shift+Enter newline"
+        placeholder="Type your message... Enter to send · Shift+Enter newline"
         aria-label="Message input"
         value={value}
         disabled={disabled}
