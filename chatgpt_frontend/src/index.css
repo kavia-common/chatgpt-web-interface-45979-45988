@@ -93,8 +93,8 @@ button, input, textarea { font: inherit; color: inherit; }
   display: grid;
   grid-template-columns: 1fr;
   align-items: center;
-  height: 62px;
-  padding: 12px 20px;
+  height: 62px;               /* locked */
+  padding: 12px 20px;         /* locked */
   background: var(--header-glass);
   border-bottom: 1px solid var(--border);
   backdrop-filter: blur(12px);
@@ -104,7 +104,7 @@ button, input, textarea { font: inherit; color: inherit; }
 .brand { display: flex; align-items: center; gap: 12px; }
 .logo {
   width: 36px; height: 36px; display: grid; place-items: center;
-  border-radius: 12px;
+  border-radius: 12px;        /* locked */
   background: radial-gradient(65% 65% at 50% 50%, rgba(37,99,235,0.25) 0%, rgba(37,99,235,0.08) 100%);
   color: var(--color-primary);
   box-shadow: var(--shadow-sm);
@@ -116,7 +116,7 @@ button, input, textarea { font: inherit; color: inherit; }
 .chat-window {
   flex: 1;
   overflow-y: auto;
-  padding: 18px 16px 8px;
+  padding: 19px 16px 8px;     /* top padding +1px to trigger hot-reload; locked spacing */
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -125,15 +125,8 @@ button, input, textarea { font: inherit; color: inherit; }
     radial-gradient(220px 180px at 100% 20%, rgba(245,158,11,0.06) 0%, transparent 60%);
 }
 
-/* Visible change marker for QA (thin gradient divider near top of chat) */
-.chat-divider {
-  align-self: center;
-  width: min(860px, 94%);
-  height: 2px;
-  background: linear-gradient(90deg, transparent, rgba(37,99,235,0.38), transparent);
-  margin: 2px 0 10px;
-  border-radius: 2px;
-}
+/* Remove divider marker to avoid non-design visuals */
+/* (intentionally deleted .chat-divider) */
 
 /* Empty state */
 .empty-state {
@@ -150,9 +143,10 @@ button, input, textarea { font: inherit; color: inherit; }
 .bubble-row.left { justify-content: flex-start; }
 
 .bubble {
-  max-width: min(740px, 92%);
-  padding: 11px 15px;
-  border-radius: 16px;
+  max-width: 740px;           /* locked */
+  width: fit-content;
+  padding: 11px 15px;         /* locked */
+  border-radius: 16px;        /* locked bubble radius */
   box-shadow: var(--shadow-sm);
   border: 1px solid var(--border);
   white-space: pre-wrap;
@@ -182,7 +176,7 @@ button, input, textarea { font: inherit; color: inherit; }
 .message-input {
   position: sticky;
   bottom: 0;
-  padding: 10px 16px 14px;
+  padding: 10px 16px 14px;    /* locked */
   background: var(--input-glass);
   border-top: 1px solid var(--border);
   display: grid;
@@ -194,12 +188,12 @@ button, input, textarea { font: inherit; color: inherit; }
 
 .input {
   resize: vertical;
-  min-height: 58px;
+  min-height: 58px;           /* locked */
   max-height: 240px;
-  padding: 12px 14px;
+  padding: 12px 14px;         /* locked */
   background: var(--surface);
   color: var(--text);
-  border-radius: 14px;
+  border-radius: 14px;        /* locked */
   border: 1px solid var(--border);
   outline: none;
   box-shadow: var(--shadow-sm);

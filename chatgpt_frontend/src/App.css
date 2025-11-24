@@ -6,6 +6,5 @@
   background: var(--bg);
   color: var(--text);
   letter-spacing: var(--letter-tight);
-  /* Visible hot-reload marker: subtle left border accent (v5) */
-  border-left: 4px solid rgba(37,99,235,0.28);
+  /* remove dev marker border */
 }

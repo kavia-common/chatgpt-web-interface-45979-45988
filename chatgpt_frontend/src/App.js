@@ -1,6 +1,6 @@
 import React from 'react';
 import './index.css'; // global styles (must load first, sets variables and resets)
-import './App.css';   // app-scoped styles and visible hot-reload marker
+import './App.css';   // app-scoped styles
 import Header from './components/Header';
 import ChatWindow from './components/ChatWindow';
 import MessageInput from './components/MessageInput';
@@ -12,19 +12,17 @@ import useChat from './hooks/useChat';
 function App() {
   /**
    * Main application composing header, chat window, input and status bar.
-   * Design reference image (for QA and pixel-match): /assets/20251124_110807_Screenshot_2025-11-24_153849.png
+   * Strict visual parity per provided screenshot.
    */
   const { theme } = useTheme('light'); // keep theme for global data-theme side-effects
   const { state, sendMessage, stop, clear } = useChat();
 
-  // no-op variable to ensure rebuilds detect file change during hot reload
-  // bump this to force preview refresh validation
-  const __previewHeartbeat = 'v9';
+  // minimal heartbeat string to trigger hot-reload; safe, non-visual
+  const __previewHeartbeat = 'v10';
 
   return (
     <div
       className="container app"
-      data-design-ref="/assets/20251124_110807_Screenshot_2025-11-24_153849.png"
       data-preview={__previewHeartbeat}
       data-theme-active={theme}
     >
