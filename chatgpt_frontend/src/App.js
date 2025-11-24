@@ -16,14 +16,19 @@ function App() {
    * Main application composing header, chat window, input and status bar.
    * Strict visual parity per provided screenshot.
    */
-  const { theme, setTheme } = useTheme('dark'); // default to dark to match screenshot
+  const { theme, setTheme, forceLight } = useTheme('light'); // default to light
   const { state, sendMessage, stop, clear } = useChat();
   const speech = useSpeech();
   const flags = React.useMemo(() => getFeatureFlags() || {}, []);
 
-  // enforce dark theme initially once (without causing extra re-render loops)
+  // enforce light theme initially once (without causing extra re-render loops)
   React.useEffect(() => {
-    if (theme !== 'dark') setTheme('dark');
+    // Force light and persist on first mount
+    if (theme !== 'light') {
+      forceLight();
+    } else {
+      setTheme('light');
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

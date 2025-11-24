@@ -14,6 +14,7 @@ export function useTheme(defaultTheme = 'light') {
   });
 
   useEffect(() => {
+    // Ensure attribute on <html> for CSS to pick up
     document.documentElement.setAttribute('data-theme', theme);
     try {
       localStorage.setItem(storageKey, theme);
@@ -25,7 +26,14 @@ export function useTheme(defaultTheme = 'light') {
   // PUBLIC_INTERFACE
   const toggleTheme = () => setTheme((t) => (t === 'light' ? 'dark' : 'light'));
 
-  return { theme, setTheme, toggleTheme };
+  // PUBLIC_INTERFACE
+  const forceLight = () => {
+    try { localStorage.setItem(storageKey, 'light'); } catch { /* ignore */ }
+    setTheme('light');
+    document.documentElement.setAttribute('data-theme', 'light');
+  };
+
+  return { theme, setTheme, toggleTheme, forceLight };
 }
 
 export default useTheme;

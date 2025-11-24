@@ -10,23 +10,24 @@ html, body, #root { height: 100%; }
   --color-success: #F59E0B;
   --color-error: #EF4444;
 
-  --bg: #0b1220;              /* default darker background to match screenshot */
-  --surface: #0f172a;
-  --surface-2: #0c1528;
-  --text: #e5e7eb;
-  --muted: #9CA3AF;
-  --border: #1f2937;
+  /* These will be overridden by [data-theme] blocks below */
+  --bg: #ffffff;
+  --surface: #ffffff;
+  --surface-2: #f3f4f6;
+  --text: #111827;
+  --muted: #6b7280;
+  --border: #e5e7eb;
 
   /* Refined look per reference */
-  --shadow-sm: 0 2px 10px rgba(0,0,0,0.30);
-  --shadow: 0 12px 36px rgba(0,0,0,0.38);
-  --shadow-strong: 0 22px 60px rgba(0,0,0,0.45);
+  --shadow-sm: 0 2px 10px rgba(0,0,0,0.10);
+  --shadow: 0 12px 36px rgba(0,0,0,0.12);
+  --shadow-strong: 0 22px 60px rgba(0,0,0,0.16);
   --radius-xs: 10px;
   --radius: 16px;
   --radius-lg: 22px;
 
-  --header-glass: linear-gradient(180deg, rgba(13,21,38,0.65) 0%, rgba(13,21,38,0.35) 100%);
-  --input-glass: linear-gradient(0deg, rgba(15,23,42,0.92) 0%, rgba(15,23,42,0.62) 100%);
+  --header-glass: linear-gradient(180deg, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0.65) 100%);
+  --input-glass: linear-gradient(0deg, rgba(255,255,255,0.96) 0%, rgba(255,255,255,0.86) 100%);
 
   /* Typography scale tuned to screenshot */
   --font-size-xs: 12px;          /* meta, status */
@@ -47,6 +48,23 @@ html, body, #root { height: 100%; }
   --chip-radius: 999px;
   --chip-padding-x: 10px;
   --chip-height: 28px;
+}
+
+/* Light theme */
+[data-theme="light"] {
+  --bg: #f9fafb;               /* per Ocean Professional background */
+  --surface: #ffffff;
+  --surface-2: #f3f4f6;
+  --text: #111827;
+  --muted: #6b7280;
+  --border: #e5e7eb;
+
+  --header-glass: linear-gradient(180deg, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0.65) 100%);
+  --input-glass: linear-gradient(0deg, rgba(255,255,255,0.96) 0%, rgba(255,255,255,0.86) 100%);
+
+  --shadow-sm: 0 2px 10px rgba(0,0,0,0.08);
+  --shadow: 0 12px 36px rgba(0,0,0,0.12);
+  --shadow-strong: 0 22px 60px rgba(0,0,0,0.16);
 }
 
 /* Dark theme */
@@ -98,16 +116,16 @@ button, input, textarea { font: inherit; color: inherit; }
   border-bottom: 1px solid rgba(31,41,55,0.85); /* slightly stronger to match reference */
   backdrop-filter: blur(12px);
   /* Obvious but safe visual tweak to validate hot-reload */
-  box-shadow: 0 1px 10px rgba(0,0,0,0.3);
+  box-shadow: 0 1px 10px rgba(0,0,0,0.28);
 }
 
 .brand { display: flex; align-items: center; gap: 10px; }
 .logo {
   width: 32px; height: 32px; display: grid; place-items: center;
   border-radius: 10px;
-  background: rgba(255,255,255,0.03);
+  background: color-mix(in srgb, var(--surface) 92%, var(--color-primary) 8%);
   color: var(--text);
-  border: 1px solid rgba(255,255,255,0.06);
+  border: 1px solid color-mix(in srgb, var(--border), var(--color-primary) 8%);
 }
 .app-title { margin: 0; font-size: 15px; font-weight: 700; letter-spacing: 0.15px; line-height: 1.05; }
 
@@ -166,20 +184,20 @@ button, input, textarea { font: inherit; color: inherit; }
   padding: 10px 14px;
   border-radius: 14px; /* slightly tighter radius as in screenshot */
   box-shadow: none;
-  border: 1px solid #1f2a3f;
-  background: #0f172a;
+  border: 1px solid var(--border);
+  background: var(--surface);
   white-space: pre-wrap;
   word-wrap: break-word;
   line-height: 1.56;
 }
 .bubble.user {
-  background: #152138;
-  border-color: #223252;
-  color: #dbeafe;
+  background: color-mix(in srgb, var(--color-primary) 8%, var(--surface));
+  border-color: color-mix(in srgb, var(--color-primary) 20%, var(--border));
+  color: color-mix(in srgb, var(--text) 88%, var(--color-primary) 12%);
 }
 .bubble.assistant {
-  background: #0f172a;
-  border-color: #1f2a3f;
+  background: var(--surface);
+  border-color: var(--border);
 }
 .bubble-text {
   margin: 0;
@@ -195,12 +213,12 @@ button, input, textarea { font: inherit; color: inherit; }
   bottom: 0;
   padding: 10px 16px 14px;
   background: var(--bg);
-  border-top: 1px solid rgba(31,41,55,0.85); /* match header weight */
+  border-top: 1px solid var(--border);
   display: grid;
   grid-template-columns: 1fr auto;
   gap: 10px;
   backdrop-filter: none;
-  box-shadow: 0 -4px 12px rgba(0,0,0,0.15);
+  box-shadow: 0 -4px 12px rgba(0,0,0,0.08);
 }
 
 .input {
@@ -208,10 +226,10 @@ button, input, textarea { font: inherit; color: inherit; }
   min-height: 54px;
   max-height: 240px;
   padding: 12px 14px;
-  background: #0f172a;
+  background: var(--surface);
   color: var(--text);
   border-radius: 12px;
-  border: 1px solid #1f2a3f; /* slightly darker for clearer edge */
+  border: 1px solid var(--border); /* slightly darker for clearer edge */
   outline: none;
   box-shadow: none;
   line-height: 1.5;
@@ -251,29 +269,29 @@ button, input, textarea { font: inherit; color: inherit; }
 .btn[disabled] { opacity: 0.6; cursor: not-allowed; transform: none; }
 
 .btn-primary {
-  background: #1b2a47;
-  border-color: #2a3b5c;
-  color: #c7d7ff;
+  background: color-mix(in srgb, var(--color-primary) 12%, var(--surface));
+  border-color: color-mix(in srgb, var(--color-primary) 25%, var(--border));
+  color: color-mix(in srgb, #ffffff 92%, var(--color-primary) 8%);
   letter-spacing: 0.2px;
-  box-shadow: 0 4px 14px rgba(0,0,0,0.28); /* subtle depth seen in reference */
+  box-shadow: 0 4px 14px rgba(0,0,0,0.12);
 }
 .btn-primary:hover {
-  background: #213255;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+  background: color-mix(in srgb, var(--color-primary) 16%, var(--surface));
+  box-shadow: 0 6px 18px rgba(0,0,0,0.14);
 }
 .btn-primary:active {
-  background: #1e2f50;
+  background: color-mix(in srgb, var(--color-primary) 18%, var(--surface));
 }
 
 /* Ghost and others kept subtle for dark */
 .btn-ghost {
   background: transparent;
   border-color: transparent;
-  color: #94a3b8;
+  color: var(--muted);
 }
 .btn-ghost:hover {
-  background: #111a2e;
-  border-color: #1f2937;
+  background: color-mix(in srgb, var(--surface) 85%, var(--color-primary) 15%);
+  border-color: var(--border);
   color: var(--text);
 }
 
