@@ -1,6 +1,6 @@
 import React from 'react';
-import './index.css';
-import './App.css';
+import './index.css'; // global styles
+import './App.css';   // app-scoped styles
 import Header from './components/Header';
 import ChatWindow from './components/ChatWindow';
 import MessageInput from './components/MessageInput';
@@ -11,16 +11,21 @@ import useChat from './hooks/useChat';
 // PUBLIC_INTERFACE
 function App() {
   /** Main application composing header, chat window, input and status bar.
-   * Design reference image (for QA): /assets/20251124_103045_Screenshot_2025-11-24_153849.png
+   * Design reference image (for QA): /assets/20251124_104305_Screenshot_2025-11-24_155544.png
    */
   const { theme, toggleTheme } = useTheme('light');
   const { state, sendMessage, stop, clear } = useChat();
 
   // no-op variable to ensure rebuilds detect file change during hot reload
-  const __previewHeartbeat = 'v2';
+  // bump this to force preview refresh validation
+  const __previewHeartbeat = 'v3';
 
   return (
-    <div className="container app" data-design-ref="/assets/20251124_103045_Screenshot_2025-11-24_153849.png" data-preview={__previewHeartbeat}>
+    <div
+      className="container app"
+      data-design-ref="/assets/20251124_104305_Screenshot_2025-11-24_155544.png"
+      data-preview={__previewHeartbeat}
+    >
       <Header theme={theme} onToggleTheme={toggleTheme} />
       <ChatWindow messages={state.messages} />
       <MessageInput onSend={sendMessage} disabled={state.pending} onClear={clear} />

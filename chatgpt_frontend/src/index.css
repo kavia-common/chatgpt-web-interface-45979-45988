@@ -4,7 +4,7 @@
 html, body, #root { height: 100%; }
 
 /* Attachment reference (design screenshot):
-   /assets/20251124_103045_Screenshot_2025-11-24_153849.png
+   /assets/20251124_104305_Screenshot_2025-11-24_155544.png
    Kept only as a reference path for designers and review.
 */
 
@@ -222,6 +222,7 @@ button, input, textarea { font: inherit; color: inherit; }
   line-height: 1;
   letter-spacing: var(--letter-tight);
   min-width: 84px;
+  font-weight: 600; /* stronger per screenshot button text */
 }
 .btn:hover { transform: translateY(-1px); }
 .btn:active { transform: translateY(0); }
@@ -231,6 +232,7 @@ button, input, textarea { font: inherit; color: inherit; }
   background: linear-gradient(180deg, rgba(37,99,235,0.16) 0%, rgba(37,99,235,0.06) 100%);
   border-color: rgba(37,99,235,0.38);
   color: var(--color-primary);
+  letter-spacing: 0.2px;
 }
 .btn-primary:hover {
   background: linear-gradient(180deg, rgba(37,99,235,0.22) 0%, rgba(37,99,235,0.10) 100%);
@@ -239,15 +241,12 @@ button, input, textarea { font: inherit; color: inherit; }
 .btn-primary:active {
   background: linear-gradient(180deg, rgba(37,99,235,0.20) 0%, rgba(37,99,235,0.08) 100%);
 }
-.btn-primary[disabled] {
-  border-color: rgba(37,99,235,0.2);
-  color: rgba(37,99,235,0.6);
-}
 
 .btn-secondary {
   background: linear-gradient(180deg, rgba(245,158,11,0.22) 0%, rgba(245,158,11,0.10) 100%);
   border-color: rgba(245,158,11,0.42);
   color: var(--color-secondary);
+  letter-spacing: 0.2px;
 }
 .btn-secondary:hover {
   background: linear-gradient(180deg, rgba(245,158,11,0.28) 0%, rgba(245,158,11,0.14) 100%);
