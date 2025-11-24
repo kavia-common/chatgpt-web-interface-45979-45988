@@ -11,7 +11,7 @@ export default function Header() {
             <path d="M4 4h16a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H9l-5 5v-5H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"></path>
           </svg>
         </div>
-        <h1 className="app-title">ChatGPT</h1>
+        <h1 className="app-title">ChatGPT · Ocean</h1>
       </div>
     </header>
   );

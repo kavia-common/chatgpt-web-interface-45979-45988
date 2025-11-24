@@ -245,6 +245,22 @@ button, input, textarea { font: inherit; color: inherit; }
 .input-actions .btn-ghost:hover { background: #0e1830; color: #e5e7eb; }
 .status-actions input[type="checkbox"] { transform: translateY(1px); }
 
+/* Emoji panel styles */
+.emoji-panel { /* colors adjust automatically via vars */ }
+.emoji-panel .emoji-cell:hover {
+  background: color-mix(in srgb, var(--surface) 85%, var(--color-primary) 15%);
+  border-color: color-mix(in srgb, var(--border), var(--color-primary) 25%);
+}
+.emoji-panel .emoji-cell:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(37,99,235,0.22);
+}
+.emoji-btn:hover {
+  background: color-mix(in srgb, var(--surface) 88%, var(--color-primary) 12%);
+  border-color: var(--border);
+  color: var(--text);
+}
+
 /* Buttons */
 .btn {
   display: inline-flex;
