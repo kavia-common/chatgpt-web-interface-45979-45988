@@ -1,5 +1,4 @@
 import React from 'react';
-import './index.css'; // must load first (variables/reset)
 import './App.css';   // app-scoped styles
 import Header from './components/Header';
 import ChatWindow from './components/ChatWindow';
@@ -54,7 +53,6 @@ function App() {
     <div
       className="container app"
       data-theme-active={theme}
-      data-hotreload-proof="v2" // temporary marker for visual verification
     >
       <Header />
       <ChatWindow messages={state.messages} onToggleReaction={toggleReaction} />
