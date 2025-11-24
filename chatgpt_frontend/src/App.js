@@ -18,7 +18,7 @@ function App() {
 
   // no-op variable to ensure rebuilds detect file change during hot reload
   // bump this to force preview refresh validation
-  const __previewHeartbeat = 'v6';
+  const __previewHeartbeat = 'v7';
 
   return (
     <div
