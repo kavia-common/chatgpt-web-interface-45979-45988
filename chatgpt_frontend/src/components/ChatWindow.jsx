@@ -14,6 +14,8 @@ export default function ChatWindow({ messages }) {
 
   return (
     <main className="chat-window" role="main" aria-label="Chat messages">
+      {/* Visible divider marker to validate preview updates */}
+      <div className="chat-divider" aria-hidden="true" />
       {messages.length === 0 ? (
         <div className="empty-state" aria-live="polite">
           Start the conversation by typing a message below.
