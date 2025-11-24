@@ -1,8 +1,8 @@
 import React from 'react';
 
 // PUBLIC_INTERFACE
-export default function Header({ theme, onToggleTheme }) {
-  /** Branded header with theme toggle */
+export default function Header() {
+  /** Branded header to match design (no subtitle/version, no visible theme toggle) */
   return (
     <header
       className="app-header"
@@ -17,19 +17,11 @@ export default function Header({ theme, onToggleTheme }) {
           </svg>
         </div>
         <div className="titles">
-          <h1 className="app-title" style={{ marginBottom: 0 }}>ChatGPT Web</h1>
-          <p className="app-subtitle">Ocean Professional · v0.1.1</p>
+          <h1 className="app-title" style={{ margin: 0 }}>ChatGPT Web</h1>
         </div>
       </div>
-      <button
-        className="btn btn-secondary"
-        type="button"
-        onClick={onToggleTheme}
-        aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
-        title={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
-      >
-        {theme === 'light' ? '🌙 Dark' : '☀️ Light'}
-      </button>
+      {/* Theme toggle intentionally hidden to match screenshot */}
+      <div style={{ width: 1, height: 1, overflow: 'hidden' }} aria-hidden="true" />
     </header>
   );
 }

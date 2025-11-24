@@ -13,20 +13,21 @@ function App() {
   /** Main application composing header, chat window, input and status bar.
    * Design reference image (for QA): /assets/20251124_104305_Screenshot_2025-11-24_155544.png
    */
-  const { theme, toggleTheme } = useTheme('light');
+  const { theme } = useTheme('light'); // keep theme for global data-theme side-effects
   const { state, sendMessage, stop, clear } = useChat();
 
   // no-op variable to ensure rebuilds detect file change during hot reload
   // bump this to force preview refresh validation
-  const __previewHeartbeat = 'v3';
+  const __previewHeartbeat = 'v4';
 
   return (
     <div
       className="container app"
       data-design-ref="/assets/20251124_104305_Screenshot_2025-11-24_155544.png"
       data-preview={__previewHeartbeat}
+      data-theme-active={theme}
     >
-      <Header theme={theme} onToggleTheme={toggleTheme} />
+      <Header />
       <ChatWindow messages={state.messages} />
       <MessageInput onSend={sendMessage} disabled={state.pending} onClear={clear} />
       <StatusBar pending={state.pending} error={state.error} onStop={stop} onClear={clear} />
