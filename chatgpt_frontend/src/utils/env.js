@@ -35,9 +35,31 @@ export function getFrontendUrl() {
   return base.replace(/\/+$/, '');
 }
 
+/**
+ * Feature flags come from REACT_APP_FEATURE_FLAGS as a JSON object.
+ * We expose helpers for specific flags used by voice features.
+ */
 // PUBLIC_INTERFACE
 export function getFeatureFlags() {
   return parseJSON(getEnv('REACT_APP_FEATURE_FLAGS'), {});
+}
+
+// PUBLIC_INTERFACE
+export function isVoiceInputEnabled() {
+  const flags = getFeatureFlags();
+  return !!flags.voice_input;
+}
+
+// PUBLIC_INTERFACE
+export function isVoiceOutputEnabled() {
+  const flags = getFeatureFlags();
+  return !!flags.voice_output;
+}
+
+// PUBLIC_INTERFACE
+export function isAutoTtsEnabled() {
+  const flags = getFeatureFlags();
+  return !!flags.auto_tts;
 }
 
 // PUBLIC_INTERFACE

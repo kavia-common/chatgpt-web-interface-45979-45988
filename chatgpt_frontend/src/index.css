@@ -222,6 +222,9 @@ button, input, textarea { font: inherit; color: inherit; }
 }
 
 .input-actions { display: flex; align-items: flex-end; gap: 8px; }
+.input-actions .btn-ghost { color: #cbd5e1; border-color: #1f2937; }
+.input-actions .btn-ghost:hover { background: #0e1830; color: #e5e7eb; }
+.status-actions input[type="checkbox"] { transform: translateY(1px); }
 
 /* Buttons */
 .btn {
