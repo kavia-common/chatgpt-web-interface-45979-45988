@@ -244,13 +244,7 @@ button, input, textarea { font: inherit; color: inherit; }
 .dot-pending { background: var(--color-secondary); }
 .dot-idle { background: #9CA3AF; }
 
-/* Helper: background guide to force cache-bust and check preview
-   Use a 1x1 transparent PNG data URI to avoid path resolution issues during build. */
-.cache-bust {
-  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8Xw8AAnwB9t6R5cEAAAAASUVORK5CYII=');
-  background-size: 1px 1px; /* essentially invisible */
-  background-repeat: no-repeat;
-}
+
 
 @media (min-width: 768px) {
   .chat-window { padding: 26px 22px 12px; }

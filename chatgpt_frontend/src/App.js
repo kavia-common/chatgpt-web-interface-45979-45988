@@ -16,8 +16,11 @@ function App() {
   const { theme, toggleTheme } = useTheme('light');
   const { state, sendMessage, stop, clear } = useChat();
 
+  // no-op variable to ensure rebuilds detect file change during hot reload
+  const __previewHeartbeat = 'v1';
+
   return (
-    <div className="container app cache-bust" data-design-ref="/assets/20251124_103045_Screenshot_2025-11-24_153849.png">
+    <div className="container app" data-design-ref="/assets/20251124_103045_Screenshot_2025-11-24_153849.png" data-preview={__previewHeartbeat}>
       <Header theme={theme} onToggleTheme={toggleTheme} />
       <ChatWindow messages={state.messages} />
       <MessageInput onSend={sendMessage} disabled={state.pending} onClear={clear} />
