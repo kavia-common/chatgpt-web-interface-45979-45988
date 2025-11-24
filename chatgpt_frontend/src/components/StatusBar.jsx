@@ -7,7 +7,7 @@ export default function StatusBar({ pending, error, onStop, onClear }) {
     <div className="status-bar" role="contentinfo" aria-live="polite">
       <div className="status">
         {pending ? <span className="dot dot-pending" aria-label="Pending" /> : <span className="dot dot-idle" aria-label="Idle" />}
-        <span className="status-text">{pending ? 'Generating response...' : 'Ready'}</span>
+        <span className="status-text">{pending ? 'Generating…' : 'Ready'}</span>
         {error ? <span className="status-error" role="alert"> · {error}</span> : null}
       </div>
       <div className="status-actions">

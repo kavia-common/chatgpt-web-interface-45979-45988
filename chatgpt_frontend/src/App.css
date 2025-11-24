@@ -1,22 +1,7 @@
-:root {
-  --k-primary: #2563EB;
-  --k-secondary: #F59E0B;
-  --k-error: #EF4444;
-  --k-bg: #f9fafb;
-  --k-surface: #ffffff;
-  --k-text: #111827;
-}
-
-[data-theme="dark"] {
-  --k-bg: #0b1220;
-  --k-surface: #0f172a;
-  --k-text: #e5e7eb;
-}
-
 .app {
   height: 100%;
   display: flex;
   flex-direction: column;
-  background: var(--k-bg);
-  color: var(--k-text);
+  background: var(--bg);
+  color: var(--text);
 }
