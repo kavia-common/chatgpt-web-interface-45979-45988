@@ -15,7 +15,7 @@ export default function ChatWindow({ messages }) {
   return (
     <main className="chat-window" role="main" aria-label="Chat messages">
       {messages.length === 0 ? (
-        <div className="empty-hero" aria-live="polite">
+        <div className="empty-hero" aria-live="polite" aria-label="Empty chat hero">
           <h2 className="hero-title">What can I help with?</h2>
           <div className="hero-search" role="group" aria-label="Prompt input demo">
             <div className="hero-icon" aria-hidden="true">🔎</div>

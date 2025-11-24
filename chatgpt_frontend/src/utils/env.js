@@ -41,7 +41,9 @@ export function getFrontendUrl() {
  */
 // PUBLIC_INTERFACE
 export function getFeatureFlags() {
-  return parseJSON(getEnv('REACT_APP_FEATURE_FLAGS'), {});
+  // Defensive: ensure a plain object is always returned
+  const parsed = parseJSON(getEnv('REACT_APP_FEATURE_FLAGS'), {});
+  return parsed && typeof parsed === 'object' ? parsed : {};
 }
 
 // PUBLIC_INTERFACE

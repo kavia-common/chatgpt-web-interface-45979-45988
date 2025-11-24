@@ -97,7 +97,8 @@ button, input, textarea { font: inherit; color: inherit; }
   background: var(--header-glass);
   border-bottom: 1px solid rgba(31,41,55,0.85); /* slightly stronger to match reference */
   backdrop-filter: blur(12px);
-  box-shadow: 0 1px 8px rgba(0,0,0,0.25);
+  /* Obvious but safe visual tweak to validate hot-reload */
+  box-shadow: 0 1px 10px rgba(0,0,0,0.3);
 }
 
 .brand { display: flex; align-items: center; gap: 10px; }
@@ -114,7 +115,7 @@ button, input, textarea { font: inherit; color: inherit; }
 .chat-window {
   flex: 1;
   overflow-y: auto;
-  padding: 21px 16px 8px;     /* +1px tweak to force visible rebuild */
+  padding: 20px 16px 8px;     /* align with screenshot top inset */
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -215,7 +216,7 @@ button, input, textarea { font: inherit; color: inherit; }
   box-shadow: none;
   line-height: 1.5;
 }
-.input::placeholder { color: #8a97ad; letter-spacing: var(--letter-wide); }
+.input::placeholder { color: #9aa6bd; letter-spacing: var(--letter-wide); }
 .input:focus {
   border-color: #2b3b59;
   box-shadow: 0 0 0 2px rgba(37,99,235,0.18);
@@ -293,7 +294,7 @@ button, input, textarea { font: inherit; color: inherit; }
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 6px 14px 14px;
+  padding: 6px 14px 12px; /* nudge to match screenshot baseline */
   color: #8a97ad;
 }
 .status { display: flex; align-items: center; gap: 8px; }
