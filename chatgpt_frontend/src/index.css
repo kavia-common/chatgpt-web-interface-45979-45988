@@ -95,7 +95,7 @@ button, input, textarea { font: inherit; color: inherit; }
   height: 56px;
   padding: 10px 16px;
   background: var(--header-glass);
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid rgba(31,41,55,0.85); /* slightly stronger to match reference */
   backdrop-filter: blur(12px);
   box-shadow: 0 1px 8px rgba(0,0,0,0.25);
 }
@@ -131,7 +131,7 @@ button, input, textarea { font: inherit; color: inherit; }
 }
 .hero-title{
   margin: 0;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 700;
   color: var(--text);
   letter-spacing: 0.2px;
@@ -140,15 +140,15 @@ button, input, textarea { font: inherit; color: inherit; }
   display: grid;
   grid-auto-flow: column;
   align-items: center;
-  gap: 10px;
-  height: 40px;
+  gap: 8px;
+  height: 36px;
   padding: 0 12px;
-  min-width: 320px;
+  min-width: 300px;
   border-radius: 999px;
-  background: #1a2438;
-  border: 1px solid #202b40;
-  color: #95a3b8;
-  box-shadow: inset 0 0 0 1px rgba(0,0,0,0.2);
+  background: #111a2e;
+  border: 1px solid #202a40;
+  color: #94a3b8;
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,0.25);
 }
 .hero-icon{ opacity: 0.9; font-size: 14px; }
 .hero-placeholder{ font-size: 13px; letter-spacing: 0.2px; }
@@ -163,7 +163,7 @@ button, input, textarea { font: inherit; color: inherit; }
   max-width: 740px;
   width: fit-content;
   padding: 10px 14px;
-  border-radius: 16px;
+  border-radius: 14px; /* slightly tighter radius as in screenshot */
   box-shadow: none;
   border: 1px solid #1f2a3f;
   background: #0f172a;
@@ -194,7 +194,7 @@ button, input, textarea { font: inherit; color: inherit; }
   bottom: 0;
   padding: 10px 16px 14px;
   background: var(--bg);
-  border-top: 1px solid #1f2937;
+  border-top: 1px solid rgba(31,41,55,0.85); /* match header weight */
   display: grid;
   grid-template-columns: 1fr auto;
   gap: 10px;
@@ -204,13 +204,13 @@ button, input, textarea { font: inherit; color: inherit; }
 
 .input {
   resize: vertical;
-  min-height: 58px;
+  min-height: 54px;
   max-height: 240px;
   padding: 12px 14px;
   background: #0f172a;
   color: var(--text);
-  border-radius: 14px;
-  border: 1px solid #1f2937;
+  border-radius: 12px;
+  border: 1px solid #1f2a3f; /* slightly darker for clearer edge */
   outline: none;
   box-shadow: none;
   line-height: 1.5;
@@ -229,9 +229,9 @@ button, input, textarea { font: inherit; color: inherit; }
   align-items: center;
   justify-content: center;
   gap: var(--btn-gap);
-  height: var(--btn-height);
+  height: 36px; /* slightly shorter like the screenshot */
   padding: 0 calc(var(--btn-padding-x) + 2px);
-  border-radius: var(--btn-radius);
+  border-radius: 12px;
   border: 1px solid #1f2937;
   cursor: pointer;
   transition: transform 120ms ease, box-shadow 120ms ease, background 120ms ease, color 120ms ease, opacity 120ms ease, border-color 120ms ease;
@@ -251,6 +251,7 @@ button, input, textarea { font: inherit; color: inherit; }
   border-color: #2a3b5c;
   color: #c7d7ff;
   letter-spacing: 0.2px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.28); /* subtle depth seen in reference */
 }
 .btn-primary:hover {
   background: #213255;

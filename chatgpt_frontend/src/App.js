@@ -1,5 +1,5 @@
 import React from 'react';
-import './index.css'; // global styles (must load first, sets variables and resets)
+import './index.css'; // must load first (variables/reset)
 import './App.css';   // app-scoped styles
 import Header from './components/Header';
 import ChatWindow from './components/ChatWindow';
@@ -17,10 +17,11 @@ function App() {
   const { theme, setTheme } = useTheme('dark'); // default to dark to match screenshot
   const { state, sendMessage, stop, clear } = useChat();
 
-  // enforce dark theme initially once
-  if (theme !== 'dark') {
-    setTimeout(() => setTheme('dark'), 0);
-  }
+  // enforce dark theme initially once (without causing extra re-render loops)
+  React.useEffect(() => {
+    if (theme !== 'dark') setTheme('dark');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="container app" data-theme-active={theme}>
