@@ -17,7 +17,7 @@ export default function Header({ theme, onToggleTheme }) {
           </svg>
         </div>
         <div className="titles">
-          <h1 className="app-title">ChatGPT Web</h1>
+          <h1 className="app-title" style={{ marginBottom: 0 }}>ChatGPT Web</h1>
           <p className="app-subtitle">Ocean Professional</p>
         </div>
       </div>

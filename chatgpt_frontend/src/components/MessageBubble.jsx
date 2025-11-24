@@ -11,7 +11,7 @@ export default function MessageBubble({ role, content }) {
         role="group"
         aria-label={`${isUser ? 'User' : 'Assistant'} message`}
       >
-        <pre className="bubble-text">{content}</pre>
+        <div className="bubble-text">{content}</div>
       </div>
     </div>
   );

@@ -15,7 +15,7 @@ function App() {
   const { state, sendMessage, stop, clear } = useChat();
 
   return (
-    <div className="container app">
+    <div className="container app cache-bust">
       <Header theme={theme} onToggleTheme={toggleTheme} />
       <ChatWindow messages={state.messages} />
       <MessageInput onSend={sendMessage} disabled={state.pending} onClear={clear} />

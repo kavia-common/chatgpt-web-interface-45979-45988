@@ -23,7 +23,7 @@ export default function ChatWindow({ messages }) {
           <MessageBubble key={m.id} role={m.role} content={m.content} />
         ))
       )}
-      <div ref={endRef} />
+      <div ref={endRef} aria-hidden="true" />
     </main>
   );
 }
