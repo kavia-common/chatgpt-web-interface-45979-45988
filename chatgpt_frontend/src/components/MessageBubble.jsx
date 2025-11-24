@@ -1,13 +1,24 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import useSpeech from '../hooks/useSpeech';
 import { getFeatureFlags } from '../utils/env';
 
 // PUBLIC_INTERFACE
-export default function MessageBubble({ id, role, content, attachments = [], reactions, onToggleReaction }) {
+export default function MessageBubble({
+  id,
+  role,
+  content,
+  attachments = [],
+  reactions,
+  onToggleReaction,
+  // search-related
+  searchQuery = '',
+  matchRanges = [],
+  getIsActive,
+  activeTargetRef,
+}) {
   /**
    * Render a chat message bubble for user or assistant with optional TTS play.
-   * Renders image attachments as thumbnails below the text.
-   * Also renders an inline reaction bar with accessible buttons.
+   * Additionally, highlight search matches with <mark> and ref-focus the active one.
    */
   const isUser = role === 'user';
   const flags = getFeatureFlags();
@@ -68,6 +79,40 @@ export default function MessageBubble({ id, role, content, attachments = [], rea
     borderColor: 'color-mix(in srgb, var(--border), var(--color-primary) 25%)'
   };
 
+  // Build highlighted content parts from ranges
+  const highlighted = useMemo(() => {
+    if (!searchQuery || !matchRanges || matchRanges.length === 0 || typeof content !== 'string') {
+      return [{ text: content, mark: false, idx: -1 }];
+    }
+    const parts = [];
+    let cursor = 0;
+    matchRanges.forEach((rng, idx) => {
+      const { start, end } = rng;
+      if (start > cursor) {
+        parts.push({ text: content.slice(cursor, start), mark: false, idx: -1 });
+      }
+      parts.push({ text: content.slice(start, end), mark: true, idx });
+      cursor = end;
+    });
+    if (cursor < content.length) {
+      parts.push({ text: content.slice(cursor), mark: false, idx: -1 });
+    }
+    return parts;
+  }, [content, matchRanges, searchQuery]);
+
+  const markStyle = {
+    background: 'color-mix(in srgb, var(--color-primary) 28%, #fff 72%)',
+    color: 'inherit',
+    padding: '0 2px',
+    borderRadius: 4,
+  };
+
+  const activeMarkStyle = {
+    ...markStyle,
+    outline: '2px solid color-mix(in srgb, var(--color-primary) 45%, transparent)',
+    background: 'color-mix(in srgb, var(--color-primary) 40%, #fff 60%)',
+  };
+
   return (
     <div className={`bubble-row ${isUser ? 'right' : 'left'}`}>
       <div
@@ -90,7 +135,21 @@ export default function MessageBubble({ id, role, content, attachments = [], rea
           </div>
         ) : null}
 
-        <div className="bubble-text">{content}</div>
+        <div className="bubble-text">
+          {highlighted.map((p, i) => {
+            if (!p.mark) return <span key={`t-${i}`}>{p.text}</span>;
+            const isActive = typeof getIsActive === 'function' ? getIsActive(id, p.idx) : false;
+            return (
+              <mark
+                key={`m-${i}`}
+                ref={isActive ? activeTargetRef : null}
+                style={isActive ? activeMarkStyle : markStyle}
+              >
+                {p.text}
+              </mark>
+            );
+          })}
+        </div>
 
         {imgs.length > 0 ? (
           <div

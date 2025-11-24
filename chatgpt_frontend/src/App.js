@@ -16,7 +16,7 @@ function App() {
    * Mobile-first responsive layout with sticky input dock and compact header.
    */
   const { theme, setTheme, forceLight } = useTheme('light'); // default to light
-  const { state, sendMessage, stop, clear, toggleReaction } = useChat();
+  const { state, sendMessage, stop, clear, toggleReaction, setSearchQuery, clearSearch, goToNextSearchResult, goToPrevSearchResult } = useChat();
   const speech = useSpeech();
   const flags = React.useMemo(() => getFeatureFlags() || {}, []);
 
@@ -54,10 +54,32 @@ function App() {
       className="container app"
       data-theme-active={theme}
     >
-      <Header />
-      <ChatWindow messages={state.messages} onToggleReaction={toggleReaction} />
+      <Header
+        searchQuery={state.searchQuery}
+        setSearchQuery={setSearchQuery}
+        clearSearch={clearSearch}
+        nextResult={goToNextSearchResult}
+        prevResult={goToPrevSearchResult}
+        activeIndex={state.activeResultIndex}
+        results={state.searchResults}
+      />
+      <ChatWindow
+        messages={state.messages}
+        onToggleReaction={toggleReaction}
+        searchQuery={state.searchQuery}
+        results={state.searchResults}
+        activeIndex={state.activeResultIndex}
+      />
       <MessageInput onSend={sendMessage} disabled={state.pending} onClear={clear} />
-      <StatusBar pending={state.pending} error={state.error} onStop={stop} onClear={clear} />
+      <StatusBar
+        pending={state.pending}
+        error={state.error}
+        onStop={stop}
+        onClear={clear}
+        searchQuery={state.searchQuery}
+        activeIndex={state.activeResultIndex}
+        results={state.searchResults}
+      />
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useReducer } from 'react';
+import { useCallback, useEffect, useMemo, useReducer, useRef } from 'react';
 import { chatReducer, initialChatState, ChatActions } from '../state/chatReducer';
 import { uid } from '../utils/id';
 import { persistedState, saveState } from '../utils/storage';
@@ -119,7 +119,69 @@ export function useChat() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state]);
 
-  return { state, sendMessage, stop, clear, toggleReaction };
+  // ---- Search feature ----
+
+  // PUBLIC_INTERFACE
+  const setSearchQuery = useCallback((q) => {
+    dispatch({ type: ChatActions.SET_SEARCH_QUERY, payload: q });
+  }, []);
+
+  // PUBLIC_INTERFACE
+  const clearSearch = useCallback(() => {
+    dispatch({ type: ChatActions.CLEAR_SEARCH });
+  }, []);
+
+  // PUBLIC_INTERFACE
+  const goToNextSearchResult = useCallback(() => {
+    dispatch({ type: ChatActions.NEXT_SEARCH_RESULT });
+  }, []);
+
+  // PUBLIC_INTERFACE
+  const goToPrevSearchResult = useCallback(() => {
+    dispatch({ type: ChatActions.PREV_SEARCH_RESULT });
+  }, []);
+
+  // Debounce compute results when query or messages change
+  const debounceRef = useRef(null);
+  useEffect(() => {
+    const q = state.searchQuery?.trim();
+    if (!q) {
+      dispatch({ type: ChatActions.SET_SEARCH_RESULTS, payload: { results: [], activeIndex: -1 } });
+      return;
+    }
+    if (debounceRef.current) clearTimeout(debounceRef.current);
+    debounceRef.current = setTimeout(() => {
+      const lower = q.toLowerCase();
+      const results = state.messages
+        .filter((m) => typeof m.content === 'string' && m.content.length > 0)
+        .map((m) => {
+          const content = m.content;
+          const lc = content.toLowerCase();
+          const indices = [];
+          let pos = 0;
+          while (true) {
+            const idx = lc.indexOf(lower, pos);
+            if (idx === -1) break;
+            indices.push({ start: idx, end: idx + lower.length });
+            pos = idx + lower.length;
+            if (indices.length > 500) break; // safety cap
+          }
+          if (indices.length > 0) {
+            return { messageId: m.id, indices, content, role: m.role };
+          }
+          return null;
+        })
+        .filter(Boolean);
+      const count = results.reduce((acc, r) => acc + r.indices.length, 0);
+      dispatch({ type: ChatActions.SET_SEARCH_RESULTS, payload: { results, activeIndex: count > 0 ? 0 : -1 } });
+    }, 200);
+    return () => {
+      if (debounceRef.current) clearTimeout(debounceRef.current);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state.searchQuery, state.messages]);
+
+  return { state, sendMessage, stop, clear, toggleReaction, setSearchQuery, clearSearch, goToNextSearchResult, goToPrevSearchResult };
 }
 
 export default useChat;

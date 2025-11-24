@@ -4,7 +4,16 @@ export const initialChatState = {
   //   reactions?: { counts: Record<string, number>, userReacted?: Record<string, boolean> } }
   messages: [],
   pending: false,
-  error: null
+  error: null,
+
+  // Search state
+  searchQuery: '',
+  searchResults: [], // [{ messageId, indices: [{ start, end }], content, role }]
+  activeResultIndex: -1,
+
+  // Optional multi-chat scaffold (not yet used across chats)
+  conversations: null,
+  currentConversationId: null,
 };
 
 export const ChatActions = {
@@ -16,6 +25,13 @@ export const ChatActions = {
   CLEAR_CHAT: 'CLEAR_CHAT',
   // Reactions
   TOGGLE_REACTION: 'TOGGLE_REACTION',
+
+  // Search
+  SET_SEARCH_QUERY: 'SET_SEARCH_QUERY',
+  SET_SEARCH_RESULTS: 'SET_SEARCH_RESULTS',
+  CLEAR_SEARCH: 'CLEAR_SEARCH',
+  NEXT_SEARCH_RESULT: 'NEXT_SEARCH_RESULT',
+  PREV_SEARCH_RESULT: 'PREV_SEARCH_RESULT',
 };
 
 function ensureReactions(m) {
@@ -36,6 +52,9 @@ export function chatReducer(state, action) {
         ...state,
         messages: [...state.messages, msg],
         error: null,
+        // message changes may invalidate previous search indices
+        searchResults: [],
+        activeResultIndex: -1,
       };
     }
     case ChatActions.ADD_ASSISTANT_MESSAGE: {
@@ -44,6 +63,8 @@ export function chatReducer(state, action) {
         ...state,
         messages: [...state.messages, msg],
         error: null,
+        searchResults: [],
+        activeResultIndex: -1,
       };
     }
     case ChatActions.APPEND_ASSISTANT_DELTA: {
@@ -90,6 +111,38 @@ export function chatReducer(state, action) {
         return next;
       });
       return { ...state, messages };
+    }
+
+    // ---- Search handling ----
+    case ChatActions.SET_SEARCH_QUERY: {
+      const q = action.payload || '';
+      return {
+        ...state,
+        searchQuery: q,
+      };
+    }
+    case ChatActions.SET_SEARCH_RESULTS: {
+      const { results, activeIndex = -1 } = action.payload || {};
+      return {
+        ...state,
+        searchResults: Array.isArray(results) ? results : [],
+        activeResultIndex: typeof activeIndex === 'number' ? activeIndex : -1,
+      };
+    }
+    case ChatActions.CLEAR_SEARCH: {
+      return { ...state, searchQuery: '', searchResults: [], activeResultIndex: -1 };
+    }
+    case ChatActions.NEXT_SEARCH_RESULT: {
+      const total = state.searchResults?.reduce((acc, r) => acc + (r.indices?.length || 0), 0) || 0;
+      if (total === 0) return state;
+      const next = (state.activeResultIndex + 1 + total) % total;
+      return { ...state, activeResultIndex: next };
+    }
+    case ChatActions.PREV_SEARCH_RESULT: {
+      const total = state.searchResults?.reduce((acc, r) => acc + (r.indices?.length || 0), 0) || 0;
+      if (total === 0) return state;
+      const prev = (state.activeResultIndex - 1 + total) % total;
+      return { ...state, activeResultIndex: prev };
     }
     default:
       return state;

@@ -3,7 +3,7 @@ import useSpeech from '../hooks/useSpeech';
 import { getFeatureFlags } from '../utils/env';
 
 // PUBLIC_INTERFACE
-export default function StatusBar({ pending, error, onStop, onClear }) {
+export default function StatusBar({ pending, error, onStop, onClear, searchQuery = '', results = [], activeIndex = -1 }) {
   /**
    * Display pending status and error messages.
    * Optional: Auto TTS toggle for new assistant messages.
@@ -45,6 +45,13 @@ export default function StatusBar({ pending, error, onStop, onClear }) {
     else setNotice(null);
   }, [voiceOutputEnabled, canSpeak]);
 
+  const totalMatches = useMemo(() => results.reduce((acc, r) => acc + (r.indices?.length || 0), 0), [results]);
+  const resultLive = totalMatches > 0 && searchQuery
+    ? `Found ${totalMatches} matches for "${searchQuery}" — showing ${activeIndex >= 0 ? activeIndex + 1 : 0}/${totalMatches}`
+    : searchQuery
+    ? `No matches for "${searchQuery}"`
+    : '';
+
   return (
     <div className="status-bar" role="contentinfo" aria-live="polite">
       <div className="status">
@@ -57,8 +64,20 @@ export default function StatusBar({ pending, error, onStop, onClear }) {
             {ttsError ? ` · ${ttsError}` : null}
           </span>
         ) : null}
+        <span className="status-text" aria-live="polite" style={{ marginLeft: 8 }}>
+          {resultLive}
+        </span>
       </div>
       <div className="status-actions" aria-label="Utility actions">
+        <label className="btn btn-ghost" style={{ minWidth: 0, padding: '0 10px', height: 32 }}>
+          <input
+            type="checkbox"
+            disabled
+            aria-label="Search all chats (coming soon)"
+            style={{ marginRight: 8 }}
+          />
+          Search all chats
+        </label>
         {voiceOutputEnabled ? (
           <label className="btn btn-ghost" style={{ minWidth: 0, padding: '0 10px', height: 32 }}>
             <input
