@@ -6,5 +6,5 @@
   background: var(--bg);
   color: var(--text);
   letter-spacing: var(--letter-tight);
-  /* remove dev marker border */
+  /* ensure no extraneous borders or markers */
 }

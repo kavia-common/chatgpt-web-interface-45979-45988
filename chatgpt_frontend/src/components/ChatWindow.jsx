@@ -15,8 +15,13 @@ export default function ChatWindow({ messages }) {
   return (
     <main className="chat-window" role="main" aria-label="Chat messages">
       {messages.length === 0 ? (
-        <div className="empty-state" aria-live="polite">
-          Start the conversation by typing a message below.
+        <div className="empty-hero" aria-live="polite">
+          <h2 className="hero-title">What can I help with?</h2>
+          <div className="hero-search" role="group" aria-label="Prompt input demo">
+            <div className="hero-icon" aria-hidden="true">🔎</div>
+            <div className="hero-placeholder">Ask anything</div>
+            <div className="hero-shortcut" aria-hidden="true">↵</div>
+          </div>
         </div>
       ) : (
         messages.map((m) => (

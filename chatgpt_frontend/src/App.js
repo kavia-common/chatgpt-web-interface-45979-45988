@@ -14,11 +14,16 @@ function App() {
    * Main application composing header, chat window, input and status bar.
    * Strict visual parity per provided screenshot.
    */
-  const { theme } = useTheme('light'); // keep theme for global data-theme side-effects
+  const { theme, setTheme } = useTheme('dark'); // default to dark to match screenshot
   const { state, sendMessage, stop, clear } = useChat();
 
-  // minimal heartbeat string to trigger hot-reload; safe, non-visual
-  const __previewHeartbeat = 'v10';
+  // change preview heartbeat for visible hot-reload without UI markers
+  const __previewHeartbeat = 'v11';
+
+  // enforce dark theme initially once
+  if (theme !== 'dark') {
+    setTimeout(() => setTheme('dark'), 0);
+  }
 
   return (
     <div
