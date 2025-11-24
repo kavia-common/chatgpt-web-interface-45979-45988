@@ -302,6 +302,11 @@ button, input, textarea { font: inherit; color: inherit; }
 .status-error { color: var(--color-error); font-size: var(--font-size-xs); }
 .status-actions { display: inline-flex; align-items: center; gap: 10px; }
 
+/* Attachment previews and thumbnails */
+.attachments-previews .btn.btn-ghost:hover {
+  background: rgba(17,26,46,0.85);
+}
+
 .dot { width: 8px; height: 8px; border-radius: 999px; display: inline-block; border: 1px solid #1f2937; }
 .dot-pending { background: var(--color-secondary); }
 .dot-idle { background: #64748b; }

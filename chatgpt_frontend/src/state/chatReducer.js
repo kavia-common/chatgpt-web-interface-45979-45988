@@ -1,5 +1,7 @@
 export const initialChatState = {
-  messages: [], // {id, role: 'user'|'assistant'|'system', content}
+  // messages: array of:
+  // { id, role: 'user'|'assistant'|'system', content, attachments?: [{ id, name, type, size, url, dataUrl }] }
+  messages: [],
   pending: false,
   error: null
 };

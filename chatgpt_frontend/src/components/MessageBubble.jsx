@@ -3,9 +3,10 @@ import useSpeech from '../hooks/useSpeech';
 import { getFeatureFlags } from '../utils/env';
 
 // PUBLIC_INTERFACE
-export default function MessageBubble({ role, content }) {
+export default function MessageBubble({ role, content, attachments = [] }) {
   /**
    * Render a chat message bubble for user or assistant with optional TTS play.
+   * Renders image attachments as thumbnails below the text.
    */
   const isUser = role === 'user';
   const flags = getFeatureFlags();
@@ -30,6 +31,10 @@ export default function MessageBubble({ role, content }) {
     cancelSpeak();
   };
 
+  const imgs = Array.isArray(attachments)
+    ? attachments.filter((a) => a && typeof a === 'object' && (a.type?.startsWith('image/') || /\.(png|jpe?g|gif|webp|bmp|svg)$/i.test(a.name || '')))
+    : [];
+
   return (
     <div className={`bubble-row ${isUser ? 'right' : 'left'}`}>
       <div
@@ -52,6 +57,41 @@ export default function MessageBubble({ role, content }) {
           </div>
         ) : null}
         <div className="bubble-text">{content}</div>
+        {imgs.length > 0 ? (
+          <div
+            className="attachments"
+            role="group"
+            aria-label="Attached images"
+            style={{ marginTop: 8, display: 'flex', gap: 8, flexWrap: 'wrap' }}
+          >
+            {imgs.map((att) => {
+              const src = att.url || att.dataUrl;
+              if (!src) return null;
+              return (
+                <a
+                  key={att.id || att.name}
+                  href={src}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label={`Open image ${att.name || 'attachment'}`}
+                  style={{
+                    display: 'inline-block',
+                    borderRadius: 8,
+                    overflow: 'hidden',
+                    border: '1px solid #1f2a3f',
+                    background: '#0b1220'
+                  }}
+                >
+                  <img
+                    src={src}
+                    alt={att.name || 'Image attachment'}
+                    style={{ width: 120, height: 120, objectFit: 'cover', display: 'block' }}
+                  />
+                </a>
+              );
+            })}
+          </div>
+        ) : null}
       </div>
     </div>
   );

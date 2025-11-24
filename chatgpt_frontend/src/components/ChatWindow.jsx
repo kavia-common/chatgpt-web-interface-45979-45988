@@ -25,7 +25,7 @@ export default function ChatWindow({ messages }) {
         </div>
       ) : (
         messages.map((m) => (
-          <MessageBubble key={m.id} role={m.role} content={m.content} />
+          <MessageBubble key={m.id} role={m.role} content={m.content} attachments={m.attachments} />
         ))
       )}
       <div ref={endRef} aria-hidden="true" />
