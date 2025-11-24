@@ -7,5 +7,5 @@
   color: var(--text);
   letter-spacing: var(--letter-tight);
   /* Minimal visible change marker: subtle left border accent to verify hot reload */
-  border-left: 2px solid rgba(37,99,235,0.15);
+  border-left: 2px solid rgba(37,99,235,0.18);
 }
