@@ -304,9 +304,10 @@ export default function MessageInput({ onSend, disabled, onClear }) {
             position: 'absolute',
             right: 8,
             bottom: 8,
-            height: 30,
+            height: 36,
             minWidth: 36,
-            padding: '0 8px'
+            padding: '0 8px',
+            borderRadius: 10
           }}
         >
           😊
@@ -388,7 +389,7 @@ export default function MessageInput({ onSend, disabled, onClear }) {
           disabled={disabled}
           aria-label="Attach images"
           title="Attach images"
-          style={{ height: 'var(--btn-height)', minWidth: 40, padding: '0 10px' }}
+          style={{ height: 'var(--btn-height)', minWidth: 44, padding: '0 12px', borderRadius: 12 }}
         >
           📎
         </button>
@@ -400,7 +401,7 @@ export default function MessageInput({ onSend, disabled, onClear }) {
             onClick={onClickMic}
             aria-label={isRecording ? 'Stop voice recording' : 'Start voice recording'}
             title={isRecording ? 'Stop' : (isSupportedInput ? 'Speak' : 'Voice not supported')}
-            style={{ height: 'var(--btn-height)', minWidth: 40, padding: '0 10px' }}
+            style={{ height: 'var(--btn-height)', minWidth: 44, padding: '0 12px', borderRadius: 12 }}
           >
             {isRecording ? '⏺️' : '🎤'}
           </button>
@@ -413,7 +414,7 @@ export default function MessageInput({ onSend, disabled, onClear }) {
           disabled={!canSend}
           aria-label="Send message"
           title="Send"
-          style={{ minWidth: 92, height: 'var(--btn-height)' }}
+          style={{ minWidth: 96, height: 'var(--btn-height)', borderRadius: 14 }}
         >
           Send
         </button>

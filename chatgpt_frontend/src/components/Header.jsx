@@ -2,7 +2,7 @@ import React from 'react';
 
 // PUBLIC_INTERFACE
 export default function Header() {
-  /** Title-only header per reference screenshot */
+  /** Compact, single-line title header optimized for mobile */
   return (
     <header className="app-header" aria-label="Application header" role="banner">
       <div className="brand">

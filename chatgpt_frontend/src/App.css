@@ -1,13 +1,16 @@
 /* App container — structural only; detailed styles live in index.css */
 .app {
   height: 100%;
+  min-height: 100dvh; /* ensure fills viewport on mobile */
   display: flex;
   flex-direction: column;
   background: var(--bg);
   color: var(--text);
   letter-spacing: var(--letter-tight);
+  padding-bottom: env(safe-area-inset-bottom, 0px); /* safe-area padding for iOS */
 }
+
 /* Temporary visual tint for hot-reload verification */
-.app[data-hotreload-proof="v1"] {
+.app[data-hotreload-proof="v2"] {
   background-image: linear-gradient(180deg, rgba(37,99,235,0.06), transparent 160px);
 }

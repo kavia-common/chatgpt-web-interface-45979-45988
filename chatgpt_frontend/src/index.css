@@ -39,15 +39,18 @@ html, body, #root { height: 100%; }
   --letter-wide: 0.2px;
 
   /* Button metrics */
-  --btn-height: 38px;
-  --btn-radius: 14px;
-  --btn-padding-x: 14px;
+  --btn-height: 42px;           /* larger touch target for mobile */
+  --btn-radius: 16px;
+  --btn-padding-x: 16px;
   --btn-gap: 8px;
 
   /* Chip/option metrics */
   --chip-radius: 999px;
   --chip-padding-x: 10px;
   --chip-height: 28px;
+
+  /* Mobile-specific bubble max width */
+  --bubble-maxw: 82vw;
 }
 
 /* Light theme */
@@ -102,41 +105,43 @@ button, input, textarea { font: inherit; color: inherit; }
 
 .container { display: flex; flex-direction: column; height: 100%; }
 
-/* Header — exact height, spacing, font sizes, title-only layout */
+/* Header — compact single-line */
 .app-header {
   position: sticky;
   top: 0;
-  z-index: 20;
+  z-index: 50;
   display: grid;
   grid-template-columns: 1fr;
   align-items: center;
-  height: 56px;
-  padding: 10px 16px;
+  height: 52px;               /* slightly more compact */
+  padding: 8px 14px;
   background: var(--header-glass);
-  border-bottom: 1px solid rgba(31,41,55,0.85); /* slightly stronger to match reference */
+  border-bottom: 1px solid rgba(31,41,55,0.85);
   backdrop-filter: blur(12px);
-  /* Obvious but safe visual tweak to validate hot-reload */
+  /* Visible tweak to validate hot-reload */
   box-shadow: 0 1px 10px rgba(0,0,0,0.28);
 }
 
 .brand { display: flex; align-items: center; gap: 10px; }
 .logo {
-  width: 32px; height: 32px; display: grid; place-items: center;
+  width: 28px; height: 28px; display: grid; place-items: center;
   border-radius: 10px;
   background: color-mix(in srgb, var(--surface) 92%, var(--color-primary) 8%);
   color: var(--text);
   border: 1px solid color-mix(in srgb, var(--border), var(--color-primary) 8%);
 }
-.app-title { margin: 0; font-size: 15px; font-weight: 700; letter-spacing: 0.15px; line-height: 1.05; }
+.app-title { margin: 0; font-size: 15px; font-weight: 700; letter-spacing: 0.15px; line-height: 1.05; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-/* Chat Window background and spacing */
+/* Chat Window — fill remaining height with safe-area padding */
 .chat-window {
   flex: 1;
+  min-height: 0;            /* allow flex child to shrink for sticky input */
   overflow-y: auto;
-  padding: 20px 16px 8px;     /* align with screenshot top inset */
+  padding: 12px 12px 8px;   /* tightened mobile spacing */
+  padding-bottom: calc(8px + env(safe-area-inset-bottom, 0px));
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
   background: var(--bg);
 }
 
@@ -144,13 +149,13 @@ button, input, textarea { font: inherit; color: inherit; }
 .empty-hero{
   margin: auto;
   display: grid;
-  gap: 18px;
+  gap: 14px;
   justify-items: center;
   text-align: center;
 }
 .hero-title{
   margin: 0;
-  font-size: 18px;
+  font-size: 17px;
   font-weight: 700;
   color: var(--text);
   letter-spacing: 0.2px;
@@ -160,9 +165,9 @@ button, input, textarea { font: inherit; color: inherit; }
   grid-auto-flow: column;
   align-items: center;
   gap: 8px;
-  height: 36px;
+  height: 34px;
   padding: 0 12px;
-  min-width: 300px;
+  min-width: 240px;
   border-radius: 999px;
   background: #111a2e;
   border: 1px solid #202a40;
@@ -179,16 +184,17 @@ button, input, textarea { font: inherit; color: inherit; }
 .bubble-row.left { justify-content: flex-start; }
 
 .bubble {
-  max-width: 740px;
+  max-width: var(--bubble-maxw);
   width: fit-content;
-  padding: 10px 14px;
-  border-radius: 14px; /* slightly tighter radius as in screenshot */
+  padding: 9px 12px;
+  border-radius: 14px;
   box-shadow: none;
   border: 1px solid var(--border);
   background: var(--surface);
   white-space: pre-wrap;
   word-wrap: break-word;
-  line-height: 1.56;
+  word-break: break-word;
+  line-height: 1.5;
 }
 .bubble.user {
   background: color-mix(in srgb, var(--color-primary) 8%, var(--surface));
@@ -203,36 +209,39 @@ button, input, textarea { font: inherit; color: inherit; }
   margin: 0;
   white-space: pre-wrap;
   word-break: break-word;
-  font-size: var(--font-size-lg);
+  font-size: var(--font-size);
   letter-spacing: var(--letter-tight);
 }
 
-/* Input dock */
+/* Input dock — sticky with safe-area padding */
 .message-input {
   position: sticky;
   bottom: 0;
-  padding: 10px 16px 14px;
+  padding: 8px 10px calc(10px + env(safe-area-inset-bottom, 0px));
   background: var(--bg);
   border-top: 1px solid var(--border);
   display: grid;
   grid-template-columns: 1fr auto;
-  gap: 10px;
+  gap: 8px;
   backdrop-filter: none;
-  box-shadow: 0 -4px 12px rgba(0,0,0,0.08);
+  box-shadow: 0 -4px 12px rgba(0,0,0,0.06);
 }
 
+.input-with-emoji { position: relative; }
+
 .input {
-  resize: vertical;
-  min-height: 54px;
-  max-height: 240px;
-  padding: 12px 14px;
+  resize: none;              /* mobile: prevent awkward resizer */
+  min-height: 46px;
+  max-height: 200px;
+  padding: 10px 40px 10px 12px; /* room for emoji btn */
   background: var(--surface);
   color: var(--text);
   border-radius: 12px;
-  border: 1px solid var(--border); /* slightly darker for clearer edge */
+  border: 1px solid var(--border);
   outline: none;
   box-shadow: none;
-  line-height: 1.5;
+  line-height: 1.4;
+  font-size: var(--font-size);
 }
 .input::placeholder { color: #9aa6bd; letter-spacing: var(--letter-wide); }
 .input:focus {
@@ -240,7 +249,14 @@ button, input, textarea { font: inherit; color: inherit; }
   box-shadow: 0 0 0 2px rgba(37,99,235,0.22);
 }
 
-.input-actions { display: flex; align-items: flex-end; gap: 8px; }
+.emoji-btn {
+  height: 36px;
+  min-width: 36px;
+}
+
+.input-actions {
+  display: flex; align-items: flex-end; gap: 8px;
+}
 .input-actions .btn-ghost { color: #cbd5e1; border-color: #1f2937; }
 .input-actions .btn-ghost:hover { background: #0e1830; color: #e5e7eb; }
 .status-actions input[type="checkbox"] { transform: translateY(1px); }
@@ -255,21 +271,16 @@ button, input, textarea { font: inherit; color: inherit; }
   outline: none;
   box-shadow: 0 0 0 2px rgba(37,99,235,0.22);
 }
-.emoji-btn:hover {
-  background: color-mix(in srgb, var(--surface) 88%, var(--color-primary) 12%);
-  border-color: var(--border);
-  color: var(--text);
-}
 
-/* Buttons */
+/* Buttons: larger mobile touch targets */
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: var(--btn-gap);
-  height: 36px; /* slightly shorter like the screenshot */
-  padding: 0 calc(var(--btn-padding-x) + 2px);
-  border-radius: 12px;
+  height: var(--btn-height);
+  padding: 0 var(--btn-padding-x);
+  border-radius: var(--btn-radius);
   border: 1px solid #1f2937;
   cursor: pointer;
   transition: transform 120ms ease, box-shadow 120ms ease, background 120ms ease, color 120ms ease, opacity 120ms ease, border-color 120ms ease;
@@ -277,7 +288,7 @@ button, input, textarea { font: inherit; color: inherit; }
   color: var(--text);
   line-height: 1;
   letter-spacing: var(--letter-tight);
-  min-width: 86px;
+  min-width: 92px;
   font-weight: 600;
 }
 .btn:hover { transform: translateY(-1px); }
@@ -304,6 +315,8 @@ button, input, textarea { font: inherit; color: inherit; }
   background: transparent;
   border-color: transparent;
   color: var(--muted);
+  min-width: 40px;          /* thumb-friendly icons */
+  padding: 0 10px;
 }
 .btn-ghost:hover {
   background: color-mix(in srgb, var(--surface) 85%, var(--color-primary) 15%);
@@ -343,7 +356,7 @@ button, input, textarea { font: inherit; color: inherit; }
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 6px 14px 12px; /* nudge to match screenshot baseline */
+  padding: 6px 12px 10px;
   color: #8a97ad;
 }
 .status { display: flex; align-items: center; gap: 8px; }
@@ -360,6 +373,20 @@ button, input, textarea { font: inherit; color: inherit; }
 .dot-pending { background: var(--color-secondary); }
 .dot-idle { background: #64748b; }
 
+/* Responsive breakpoints */
+@media (min-width: 640px) {
+  :root { --bubble-maxw: 70vw; }
+  .chat-window { padding: 16px 16px 10px; gap: 10px; }
+  .input { max-height: 220px; }
+}
+
 @media (min-width: 768px) {
-  .chat-window { padding: 23px 22px 12px; } /* +1px to top padding for visible change */
+  :root { --bubble-maxw: 640px; }
+  .app-header { height: 56px; padding: 10px 16px; }
+  .chat-window { padding: 20px 18px 12px; gap: 12px; }
+  .input { max-height: 240px; }
+}
+
+@media (min-width: 1024px) {
+  .chat-window { padding-left: 22px; padding-right: 22px; }
 }

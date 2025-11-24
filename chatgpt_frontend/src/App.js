@@ -14,7 +14,7 @@ import { getFeatureFlags } from './utils/env';
 function App() {
   /**
    * Main application composing header, chat window, input and status bar.
-   * Strict visual parity per provided screenshot.
+   * Mobile-first responsive layout with sticky input dock and compact header.
    */
   const { theme, setTheme, forceLight } = useTheme('light'); // default to light
   const { state, sendMessage, stop, clear, toggleReaction } = useChat();
@@ -54,7 +54,7 @@ function App() {
     <div
       className="container app"
       data-theme-active={theme}
-      data-hotreload-proof="v1" // temporary marker for visual verification
+      data-hotreload-proof="v2" // temporary marker for visual verification
     >
       <Header />
       <ChatWindow messages={state.messages} onToggleReaction={toggleReaction} />
