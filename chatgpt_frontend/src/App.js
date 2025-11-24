@@ -46,7 +46,11 @@ function App() {
   }, [state.messages]);
 
   return (
-    <div className="container app" data-theme-active={theme}>
+    <div
+      className="container app"
+      data-theme-active={theme}
+      data-hotreload-proof="v1" // temporary marker for visual verification
+    >
       <Header />
       <ChatWindow messages={state.messages} />
       <MessageInput onSend={sendMessage} disabled={state.pending} onClear={clear} />

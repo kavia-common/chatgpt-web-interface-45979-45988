@@ -109,7 +109,7 @@ button, input, textarea { font: inherit; color: inherit; }
   color: var(--text);
   border: 1px solid rgba(255,255,255,0.06);
 }
-.app-title { margin: 0; font-size: 15px; font-weight: 700; letter-spacing: 0.1px; line-height: 1.05; }
+.app-title { margin: 0; font-size: 15px; font-weight: 700; letter-spacing: 0.15px; line-height: 1.05; }
 
 /* Chat Window background and spacing */
 .chat-window {
@@ -218,8 +218,8 @@ button, input, textarea { font: inherit; color: inherit; }
 }
 .input::placeholder { color: #9aa6bd; letter-spacing: var(--letter-wide); }
 .input:focus {
-  border-color: #2b3b59;
-  box-shadow: 0 0 0 2px rgba(37,99,235,0.18);
+  border-color: #35507a;
+  box-shadow: 0 0 0 2px rgba(37,99,235,0.22);
 }
 
 .input-actions { display: flex; align-items: flex-end; gap: 8px; }
