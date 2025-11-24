@@ -1,4 +1,4 @@
-/* App container — ensure full height and column layout */
+/* App container — structural only; detailed styles live in index.css */
 .app {
   height: 100%;
   display: flex;
@@ -6,6 +6,6 @@
   background: var(--bg);
   color: var(--text);
   letter-spacing: var(--letter-tight);
-  /* Visible hot-reload marker: left border accent (v4) */
-  border-left: 5px solid rgba(37,99,235,0.33);
+  /* Visible hot-reload marker: subtle left border accent (v5) */
+  border-left: 4px solid rgba(37,99,235,0.28);
 }

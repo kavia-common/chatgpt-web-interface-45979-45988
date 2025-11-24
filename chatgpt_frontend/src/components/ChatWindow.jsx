@@ -25,6 +25,10 @@ export default function ChatWindow({ messages }) {
           <MessageBubble key={m.id} role={m.role} content={m.content} />
         ))
       )}
+      {/* Minimal visible change marker inside chat for QA */}
+      <div style={{ alignSelf: 'center', fontSize: '11px', color: 'var(--muted)', opacity: 0.75, marginTop: 2 }}>
+        UI synced to /assets/20251124_110807_Screenshot_2025-11-24_153849.png
+      </div>
       <div ref={endRef} aria-hidden="true" />
     </main>
   );

@@ -3,11 +3,7 @@
 
 html, body, #root { height: 100%; }
 
-/* Attachment reference (design screenshot):
-   /assets/20251124_105643_Screenshot_2025-11-24_153849.png
-   Kept only as a reference path for designers and review.
-*/
-
+/* Attachment reference (design screenshot): keep for QA */
 :root {
   /* Ocean Professional tokens — design-tokens root */
   --color-primary: #2563EB;
@@ -54,6 +50,7 @@ html, body, #root { height: 100%; }
   --chip-height: 28px;
 }
 
+/* Dark theme */
 [data-theme="dark"] {
   --bg: #0b1220;
   --surface: #0f172a;
@@ -88,17 +85,16 @@ button, input, textarea { font: inherit; color: inherit; }
 
 .container { display: flex; flex-direction: column; height: 100%; }
 
-/* Header — exact height, spacing, font sizes */
+/* Header — exact height, spacing, font sizes, title-only layout */
 .app-header {
   position: sticky;
   top: 0;
   z-index: 20;
   display: grid;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: 1fr;
   align-items: center;
-  gap: 10px;
-  height: 62px; /* tighten to match screenshot */
-  padding: 10px 20px;
+  height: 62px;
+  padding: 12px 20px;
   background: var(--header-glass);
   border-bottom: 1px solid var(--border);
   backdrop-filter: blur(12px);
@@ -116,7 +112,7 @@ button, input, textarea { font: inherit; color: inherit; }
 }
 .titles .app-title { margin: 0; font-size: 16px; font-weight: 800; letter-spacing: 0.1px; line-height: 1.05; }
 
-/* Chat Window */
+/* Chat Window background and spacing */
 .chat-window {
   flex: 1;
   overflow-y: auto;
@@ -129,14 +125,14 @@ button, input, textarea { font: inherit; color: inherit; }
     radial-gradient(220px 180px at 100% 20%, rgba(245,158,11,0.06) 0%, transparent 60%);
 }
 
-/* Divider marker to validate preview (subtle) */
+/* Visible change marker for QA (thin gradient divider near top of chat) */
 .chat-divider {
   align-self: center;
   width: min(860px, 94%);
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(37,99,235,0.25), transparent);
-  margin: 4px 0 6px;
-  border-radius: 1px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(37,99,235,0.38), transparent);
+  margin: 2px 0 10px;
+  border-radius: 2px;
 }
 
 /* Empty state */
@@ -148,7 +144,7 @@ button, input, textarea { font: inherit; color: inherit; }
   letter-spacing: var(--letter-wide);
 }
 
-/* Bubbles — precise max width and radii */
+/* Bubbles — max width and radii aligned to reference */
 .bubble-row { display: flex; }
 .bubble-row.right { justify-content: flex-end; }
 .bubble-row.left { justify-content: flex-start; }
@@ -169,7 +165,6 @@ button, input, textarea { font: inherit; color: inherit; }
   border-color: rgba(37,99,235,0.28);
   color: #0b1a3d;
 }
-
 [data-theme="dark"] .bubble.user { color: #dbeafe; }
 .bubble.assistant { background: var(--surface); }
 
@@ -236,7 +231,7 @@ button, input, textarea { font: inherit; color: inherit; }
   line-height: 1;
   letter-spacing: var(--letter-tight);
   min-width: 86px;
-  font-weight: 600; /* stronger per screenshot button text */
+  font-weight: 600;
 }
 .btn:hover { transform: translateY(-1px); }
 .btn:active { transform: translateY(0); }
@@ -293,7 +288,7 @@ button, input, textarea { font: inherit; color: inherit; }
   box-shadow: var(--shadow-sm);
 }
 
-/* Option chips / dropdown scaffolding to match design */
+/* Option chips / dropdown scaffolding */
 .chips {
   display: flex;
   gap: 8px;
